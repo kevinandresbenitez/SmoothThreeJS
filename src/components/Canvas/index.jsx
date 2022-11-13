@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef} from 'react'
+import {useEffect,useRef} from 'react'
 import * as THREE from 'three';
 import {OrbitControls} from '../../../node_modules/three/examples/jsm/controls/OrbitControls';
 
@@ -8,29 +8,29 @@ function Canvas(props){
     let scene = new THREE.Scene();
     let canvas = useRef();
     let renderer;
+    let controls;
     let elements = [];
 
     useEffect(()=>{
         setDefaultValues();
-        Animate();
 
+        // Load elements and animate
         addElement(createElement.cube());
         addElement(createElement.plataform());
         addElement(createElement.ambientLight());
         addElement(createElement.pointLight());
+        Animate();
     },[])
-
-    let controls ;
 
     let setDefaultValues = ()=>{
         // Init renderer
         renderer = new THREE.WebGLRenderer({canvas:canvas.current})
         renderer.setSize(window.innerWidth,window.innerHeight);
-        renderer.setClearColor('#eae8e0');
+        renderer.setClearColor('#c7e4d2');
         renderer.shadowMap.enabled = true;
 
         // Camara Position
-        camera.position.set(4,4,4);
+        camera.position.set(8,8,8);
         camera.lookAt(0,0,0);
 
 
@@ -55,8 +55,8 @@ function Canvas(props){
         },
 
         plataform:()=>{
-            const geometry = new THREE.PlaneGeometry(5,5);
-            const material = new THREE.MeshStandardMaterial({color:'#eae8e0',reflectivity:0,fog:0});
+            const geometry = new THREE.PlaneGeometry(2,2);
+            const material = new THREE.MeshStandardMaterial({color:'#eae8e0'});
             const plataform = new THREE.Mesh(geometry,material);
             plataform.rotateX(-Math.PI * 90 / 180)
             plataform.position.set(0,-0.5,0);
@@ -85,7 +85,7 @@ function Canvas(props){
     }
 
     return(
-            <canvas ref={canvas} id='canvas'/>
+        <canvas ref={canvas} id='canvas'/>
     )
 }
 
