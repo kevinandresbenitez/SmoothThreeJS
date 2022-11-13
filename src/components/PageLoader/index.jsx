@@ -16,7 +16,7 @@ function PageLoader(){
     },[])
 
     return(
-        <div ref={pageLoaderDom} className={`pageloader-container ${isPageLoaded ? 'hidde-pageloader':false}`}>
+        <div ref={pageLoaderDom} className={`pageloader-container ${!isPageLoaded || 'hidde-pageloader'}`}>
             <span className="loader"></span>
         </div>
     )
