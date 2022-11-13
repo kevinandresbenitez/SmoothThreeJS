@@ -20,6 +20,9 @@ function Canvas(props){
         addElement(createElement.ambientLight());
         addElement(createElement.pointLight());
         Animate();
+
+        // Add resize metod
+        window.addEventListener('resize',resize)
     },[])
 
     let setDefaultValues = ()=>{
@@ -38,7 +41,6 @@ function Canvas(props){
         controls= new OrbitControls( camera, renderer.domElement );
         controls.update();
     }
-
 
     let addElement = (element)=>{
         scene.add(element);
@@ -76,6 +78,11 @@ function Canvas(props){
         }
     }
 
+    let resize =()=>{
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight);
+    }
 
     let Animate =()=>{
         camera.updateProjectionMatrix();
