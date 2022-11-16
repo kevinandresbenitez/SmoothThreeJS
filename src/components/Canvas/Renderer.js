@@ -19,9 +19,17 @@ export default class Renderer {
 
 
     setRender(){
-        this.renderer = new THREE.WebGL1Renderer({canvas:this.canvas,antialias:true});
-        this.renderer.setClearColor('#c7e4d2')
-        this.renderer.setSize(this.sizes.width,this.sizes.height)
+        this.renderer = new THREE.WebGLRenderer({canvas:this.canvas});
+        this.renderer.sortObjects = false;
+        this.renderer.physicallyCorrectLights = true;
+        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.toneMapping = THREE.CineonToneMapping;
+        this.renderer.toneMappingExposure = 1.75;
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        this.renderer.setClearColor('#c7e4d2');
+        this.renderer.setSize(this.sizes.width,this.sizes.height);
+        this.renderer.setPixelRatio(this.sizes.pixelRatio);
     }
 
     resize = ()=>{
@@ -36,8 +44,9 @@ export default class Renderer {
 
     animate = ()=>{
         requestAnimationFrame(this.animate);
-        this.controls.update();
-        this.renderer.render(this.scene,this.camera.orthograpicCamera);
+        this.camera.controls.update();
+        // this.renderer.render(this.scene,this.camera.orthograpicCamera);
+        this.renderer.render(this.scene,this.camera.perspectiveCamera);
     }
 
 

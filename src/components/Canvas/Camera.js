@@ -1,5 +1,6 @@
 import Canvas from '../Canvas'
 import * as THREE  from 'three';
+import {OrbitControls} from '../../../node_modules/three/examples/jsm/controls/OrbitControls.js';
 
 export default class Camera{
 
@@ -7,16 +8,27 @@ export default class Camera{
         this.MainCanvas = new Canvas();
         this.sizes = this.MainCanvas.sizes;
         this.scene = this.MainCanvas.scene;
+        this.canvas = this.MainCanvas.canvas;
 
         // Add camera
-        this.addOrthograpicCamera();
+        // this.addOrthograpicCamera();
+        this.addPerspectiveCamera();
+
+
+        // Helpers
+        this.controls = new OrbitControls(this.perspectiveCamera,this.canvas.current)
+        this.controls.enableDamping = true
+        this.controls.enableZoom = true
     }
 
     
     addPerspectiveCamera(){
-        this.perspectiveCamera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight ,0.1,1000);
-        this.perspectiveCamera.position.set(3,3,3);
-        this.perspectiveCamera.lookAt(0,0,0);
+        this.perspectiveCamera = new THREE.PerspectiveCamera(
+            5,this.sizes.aspect,1,100
+        );
+        this.perspectiveCamera.position.set(29,14,12)
+        // this.perspectiveCamera.zoom = 100
+
         this.scene.add(this.perspectiveCamera)
     }
 
@@ -28,8 +40,8 @@ export default class Camera{
             (this.sizes.frustrum / 2)
         );
         
-        this.orthograpicCamera.position.set(1,1,1);
-        this.orthograpicCamera.lookAt(0,0,0);
+        this.orthograpicCamera.position.set(-Math.PI / 6,5.65,10)
+        // this.orthograpicCamera.lookAt(0,0,0);
         this.scene.add(this.orthograpicCamera)
     }
 

@@ -1,6 +1,8 @@
 import Canvas from "../index.jsx";
-import {gsap} from 'gsap';
 import * as THREE from 'three';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
 
 export default class Elements{
 
@@ -8,33 +10,34 @@ export default class Elements{
         this.MainCanvas = new Canvas();
         this.scene = this.MainCanvas.scene;
         this.elements = {};
-        // Add elements
-        this.addCube();
 
-        // Add Animation
-        window.addEventListener('load',this.animateCube)
+        this.loadElements();
     }
 
-    animateCube=()=>{
-        let timeline = gsap.timeline();
+    loadElements = async ()=>{
+        // Load loaders
+        this.gltfLoader = new GLTFLoader();
+        this.dracoLoader = new DRACOLoader();
+        this.dracoLoader.setDecoderPath( '../../../../node_modules/three/examples/js/libs/draco/');
+        this.gltfLoader.setDRACOLoader( this.dracoLoader );        
 
-        timeline.to(this.elements.cube.scale,{x:0.10,y:0.10,z:0.10,duration:0.3});
-        timeline.to(this.elements.cube.scale,{x:0.25,y:0.25,z:0.25,duration:0.3});
-        timeline.to(this.elements.cube.position,{x:0,y:0.5,z:1,duration:0.3});
+
+        // Load Elements
+        let room = await this.loadRoom();
+        // room.scene.rotation.set(180 * Math.PI / 180,0,0);
+        room.scene.scale.set(0.11,0.11,0.11);
+
+        // Add elements in the scene
+        this.scene.add(room.scene)
     }
 
-    addCube = ()=>{
-        const geometry = new THREE.BoxGeometry(1,1,1);
-        const material = new THREE.MeshStandardMaterial({color:'#e0cfcd',fog:true,roughness:0.7});
-        const cube = new THREE.Mesh(geometry,material);
-        cube.position.set(0,0,0);
-        cube.scale.set(0,0,0);
-        cube.receiveShadow = true;
-        this.elements['cube'] = cube;
-        this.scene.add(cube);
+    loadRoom =()=>{
+        return new Promise((resolve,reject)=>{
+            this.gltfLoader.load('../../../../public/Models/Room.glb',(room)=>{
+                resolve(room)
+            })
+        })
     }
-
-
 
 
 }
