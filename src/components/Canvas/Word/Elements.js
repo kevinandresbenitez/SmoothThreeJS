@@ -9,7 +9,6 @@ export default class Elements{
     constructor(){
         this.MainCanvas = new Canvas();
         this.scene = this.MainCanvas.scene;
-        this.elements = {};
 
         this.loadElements();
     }
@@ -18,7 +17,7 @@ export default class Elements{
         // Load loaders
         this.gltfLoader = new GLTFLoader();
         this.dracoLoader = new DRACOLoader();
-        this.dracoLoader.setDecoderPath( '../../../../node_modules/three/examples/js/libs/draco/');
+        this.dracoLoader.setDecoderPath( 'DracoDecoder/');
         this.gltfLoader.setDRACOLoader( this.dracoLoader );        
 
 
