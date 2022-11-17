@@ -7,7 +7,5 @@ import 'normalize.css';
 import '../public/main.less';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <Home />
-  </React.StrictMode>
 )

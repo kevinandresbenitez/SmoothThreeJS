@@ -11,7 +11,7 @@ export default class Camera{
         this.canvas = this.MainCanvas.canvas;
 
         // Add camera
-        // this.addOrthograpicCamera();
+        this.addOrthograpicCamera();
         this.addPerspectiveCamera();
 
 
@@ -26,9 +26,7 @@ export default class Camera{
         this.perspectiveCamera = new THREE.PerspectiveCamera(
             5,this.sizes.aspect,1,100
         );
-        this.perspectiveCamera.position.set(29,14,12)
-        // this.perspectiveCamera.zoom = 100
-
+        this.perspectiveCamera.position.set(39,24,32)
         this.scene.add(this.perspectiveCamera)
     }
 
@@ -41,9 +39,25 @@ export default class Camera{
         );
         
         this.orthograpicCamera.position.set(-Math.PI / 6,5.65,10)
-        // this.orthograpicCamera.lookAt(0,0,0);
         this.scene.add(this.orthograpicCamera)
     }
 
-    
+    resize(){
+        // Resize persepctive camera
+        this.perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
+        this.perspectiveCamera.updateProjectionMatrix();
+        
+        // Resize ortografic camera
+        this.orthograpicCamera.aspect = this.sizes.aspect;
+        this.orthograpicCamera.left = (-this.sizes.aspect * this.sizes.frustrum) / 2
+        this.orthograpicCamera.right = (this.sizes.aspect * this.sizes.frustrum) / 2
+        this.orthograpicCamera.top = (-this.sizes.frustrum / 2)
+        this.orthograpicCamera.bottom = (this.sizes.frustrum / 2)
+        this.orthograpicCamera.updateProjectionMatrix();
+
+    }
+
+    update(){
+        this.controls.update();
+    }
 }

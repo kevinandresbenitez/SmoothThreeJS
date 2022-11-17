@@ -22,11 +22,11 @@ export default class Light{
     addDirectionalLight = ()=>{
         const light = new THREE.DirectionalLight('#ffffff',3);
         light.shadow.camera.far = 20 ;
-        light.shadow.castShadow = true;
-        light.shadow.mapSize.set(1024,1024);
+        light.castShadow = true;
+        light.shadow.mapSize.set(2048,2048);
         light.shadow.camera.far=20;
         light.shadow.normalBias = 0.05;
-        light.position.set(-20,-50,1);
+        light.position.set(-1.5, 7, 3);
         this.scene.add(light)
     }
 
