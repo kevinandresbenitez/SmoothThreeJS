@@ -1,14 +1,14 @@
+import {lazy,Suspense} from 'react';
 // Import components
-import Canvas from '../../components/Canvas';
+const Canvas = lazy(()=>import('../../components/Canvas'))
 import PageLoader from '../../components/PageLoader';
 
 function Home() {
   
   return(
-    <div>
-      <Canvas />
-      <PageLoader />
-    </div>
+      <Suspense fallback={<PageLoader />}>
+        <Canvas />
+      </Suspense>    
   )
 }
 

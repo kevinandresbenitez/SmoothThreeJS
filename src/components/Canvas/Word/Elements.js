@@ -36,6 +36,8 @@ export default class Elements{
         room.scene.children.forEach((element)=>{
             element.castShadow = true;
             element.receiveShadow = true;          
+            console.log(element.name)
+
 
             if (element instanceof THREE.Group) {
                 element.children.forEach((groupchild) => {
@@ -53,15 +55,39 @@ export default class Elements{
                 element.material.opacity = 1;
             }
 
+            // Elements in the mini floor
             if (element.name === "Mini_Floor") {
                 element.position.x = -0.289521;
                 element.position.z = 8.83572;
             }
+            if(element.name == 'Mailbox'){
+                element.position.x = 5;
+                element.position.z = 3;
+            }
+            if(element.name == 'FloorFirst' || element.name == 'FloorSecond' || element.name == 'FloorThird'){
+                element.position.x = -3;
+                element.position.z = 3;
+            }
+            if(element.name == 'Dirt'){
+                element.position.x = -3;
+                element.position.z = 3;
+            }
+            if(element.name == 'Flower1' || element.name == 'Flower2'){
+                element.position.x = -3;
+                element.position.z = 3;
+            }
+            if(element.name == 'Lamp'){
+                element.position.x = -3;
+                element.position.z = 3;
+            }
+            // End elements in the mini floor
+
 
             if (element.name === "Cube") {
-                element.scale.set(0,0,0);
-                element.position.set(-2,9,2);
-                element.rotation.y = Math.PI / 4;
+                element.scale.set(11,11,11);
+                element.position.set(0.6,9,1.8);
+                element.rotation.y = 43 * Math.PI / 180;
+                
             }
 
         })
