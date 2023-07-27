@@ -4,8 +4,6 @@ import {Renderer} from './Renderer.js';
 import {Resources} from './Resources.js';
 import { Scene } from "three";
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 
 
@@ -45,7 +43,7 @@ export default class Experience{
        this.resources.configureLoaders();
        let elementsAreLoaded = await this.resources.loadAssets('Room.glb');
        if(elementsAreLoaded){
-            console.log(this.resources.scene_item)
+            this.onLoad()
        }
 
        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -59,5 +57,6 @@ export default class Experience{
         this.renderer.animate();
     }
 
+    onLoad = ()=>{};
 
 }
