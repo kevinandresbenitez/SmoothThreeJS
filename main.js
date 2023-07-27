@@ -1,5 +1,4 @@
 import Experience from "./Experience/Experience";
-import './public/pageLoader.css';
 
 // Experience
 let experience = new Experience(document.getElementById('canvas'));
