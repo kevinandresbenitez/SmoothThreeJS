@@ -1,9 +1,13 @@
 import SmoothScroll from "./utils/SmoothScroll";
 import {Camera} from './Camera.js';
 import {Renderer} from './Renderer.js';
-import {Word} from './Word.js';
+import {Resources} from './Resources.js';
 import { Scene } from "three";
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+
 
 //Enable smooth js
 SmoothScroll.enable();
@@ -12,7 +16,7 @@ export default class Experience{
     canvas;
     camera;
     renderer;
-    word;
+    resources;
     scene;
 
     static Instance;
@@ -30,13 +34,19 @@ export default class Experience{
         this.canvas = canvas;
         this.camera = new Camera();
         this.renderer = new Renderer();
-        this.word = new Word();
+        this.resources = new Resources();
         this.scene = new Scene();
     }
 
-    run(){
+    async run(){
        this.camera.addPerspectiveCamera();
        this.renderer.configureRenderer();
+
+       this.resources.configureLoaders();
+       let elementsAreLoaded = await this.resources.loadAssets('Room.glb');
+       if(elementsAreLoaded){
+            console.log(this.resources.scene_item)
+       }
 
        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
