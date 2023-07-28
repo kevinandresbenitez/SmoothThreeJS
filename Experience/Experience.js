@@ -64,13 +64,14 @@ export default class Experience{
         this.resources.ligth.addAmbientLight();
         this.resources.ligth.addSunLigth()
         this.resources.scene_main.scale.set(0.11,0.11,0.11);
+        this.resources.configureModel(this.resources.scene_Model)
 
         this.camera.addPerspectiveCamera();
         this.camera.addOrthographicCamera();
         this.controls.addOrbitControll(this.camera.camerasEnabled[this.camera.mainCameraIndex],this.canvas);
 
-        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.z = 5;
-        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.y = 5;
+        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.z = 10;
+        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.y = 10;
         this.camera.camerasEnabled[this.camera.mainCameraIndex].lookAt(this.resources.scene_main.position);
 
         this.scene.add(this.resources.scene_main);
