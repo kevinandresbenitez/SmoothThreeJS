@@ -1,6 +1,7 @@
 import Experience  from "./Experience";
 import { Sizes } from "./utils/Sizes";
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class Camera{
     mainExperience;
@@ -24,12 +25,22 @@ export class Camera{
     }
     //Setters and getters
 
-
     addPerspectiveCamera(){
-        let PerspectiveCamera = new THREE.PerspectiveCamera( 75, Sizes.aspect, 0.1, 1000 );
+        let PerspectiveCamera = new THREE.PerspectiveCamera( 35, Sizes.aspect, 0.1, 1000 );
         this.camerasEnabled.push(PerspectiveCamera);
         this.mainExperience.scene.add(PerspectiveCamera);
     };
+    addOrthographicCamera(){
+        let OrthographicCamera = new THREE.OrthographicCamera(
+            (-Sizes.aspect * Sizes.frustrum) / 2,
+            (Sizes.aspect * Sizes.frustrum) / 2,
+            (-Sizes.frustrum / 2),
+            (Sizes.frustrum / 2),
+            -100,100
+        );
+        this.camerasEnabled.push(OrthographicCamera);
+        this.mainExperience.scene.add(OrthographicCamera);
+    }
 
     isAnyCameraEnabled(){
         return this.camerasEnabled.length;

@@ -6,6 +6,7 @@ import { Scene } from "three";
 import * as THREE from 'three';
 import { Sizes } from "./utils/Sizes";
 import {WindowEvents} from "./WindowEvents";
+import { Controls } from "./Controls";
 
 
 //Enable smooth js
@@ -17,6 +18,9 @@ export default class Experience{
     renderer;
     resources;
     scene;
+    windowEvents;
+    controls;
+    ModelfileToLoad = 'Room.glb';
 
     static Instance;
     constructor(canvas = false){
@@ -33,17 +37,17 @@ export default class Experience{
         this.canvas = canvas;
         this.camera = new Camera();
         this.renderer = new Renderer();
-        this.resources = new Resources();
         this.scene = new Scene();
+        this.resources = new Resources();
         this.windowEvents = new WindowEvents();
+        this.controls = new Controls();
     }
 
     async run(){
-       this.camera.addPerspectiveCamera();
        this.renderer.configureRenderer();
-
        this.resources.configureLoaders();
-       let elementsAreLoaded = await this.resources.loadAssets('Room.glb');
+
+       let elementsAreLoaded = await this.resources.loadAssets(this.ModelfileToLoad);
        if(elementsAreLoaded){
             this.main();
        }
@@ -52,17 +56,24 @@ export default class Experience{
     main = ()=>{
         this.onLoad();
         this.windowEvents.add("resize",this.resize);
+        this.configureWorld();
         this.renderer.animate();
+    }
 
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        const cube = new THREE.Mesh( geometry, material );
-        this.scene.add( cube );
-        
-        this.camera.mainCameraIndex = 5;
+    configureWorld(){
+        this.resources.ligth.addAmbientLight();
+        this.resources.ligth.addSunLigth()
+        this.resources.scene_main.scale.set(0.11,0.11,0.11);
+
+        this.camera.addPerspectiveCamera();
+        this.camera.addOrthographicCamera();
+        this.controls.addOrbitControll(this.camera.camerasEnabled[this.camera.mainCameraIndex],this.canvas);
+
         this.camera.camerasEnabled[this.camera.mainCameraIndex].position.z = 5;
- 
- 
+        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.y = 5;
+        this.camera.camerasEnabled[this.camera.mainCameraIndex].lookAt(this.resources.scene_main.position);
+
+        this.scene.add(this.resources.scene_main);
     }
 
     resize = ()=>{
