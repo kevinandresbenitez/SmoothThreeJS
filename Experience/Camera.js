@@ -13,7 +13,11 @@ export class Camera{
 
     //Setters and getters
     set mainCameraIndex(value){
-        return false
+        if(!this.camerasEnabled[value]){
+            return false
+        };
+        this.#mainCameraIndex = value
+        return true
     }
     get mainCameraIndex(){
         return this.#mainCameraIndex;
@@ -29,5 +33,33 @@ export class Camera{
 
     isAnyCameraEnabled(){
         return this.camerasEnabled.length;
+    }
+
+    resize(){
+        // Update proyection matriz in cameras 
+        this.camerasEnabled.forEach((camera)=>{
+            if(camera instanceof THREE.PerspectiveCamera || camera instanceof THREE.OrthographicCamera){
+                camera.updateProjectionMatrix()
+            }
+        });
+
+        // Update Aspect in cameras perspective 
+        this.camerasEnabled.forEach((camera)=>{
+            if(camera instanceof THREE.PerspectiveCamera){
+                camera.aspect = Sizes.aspect;
+            }
+        });
+
+        // Update properties in camera ortograpic 
+        this.camerasEnabled.forEach((camera)=>{
+            if(camera instanceof THREE.OrthographicCamera){
+                camera.left = Sizes.width / -2;
+                camera.right = Sizes.width / 2;
+                camera.top = Sizes.height / 2;
+                camera.bottom = Sizes.height / -2;
+            }
+        });
+
+
     }
 }

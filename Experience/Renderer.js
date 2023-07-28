@@ -10,11 +10,15 @@ export class Renderer{
     }
 
     configureRenderer(){
-        this.renderer.setSize(Sizes.width,Sizes.height);
+        this.resize();
     }
 
     animate = ()=>{
         requestAnimationFrame(this.animate);
         this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.camerasEnabled[0]);
+    }
+
+    resize(){
+        this.renderer.setSize(Sizes.width,Sizes.height);
     }
 }
