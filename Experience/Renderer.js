@@ -6,14 +6,14 @@ export class Renderer{
     mainExperience;
     constructor(){
         this.mainExperience = new Experience();
-        this.renderer = new THREE.WebGLRenderer({canvas:this.mainExperience.canvas,antialias:false});
+        this.renderer = new THREE.WebGLRenderer({canvas:this.mainExperience.canvas,antialias:true});
     }
 
     configureRenderer(){
         this.resize();
         this.renderer.useLegacyLight = true;
         this.renderer.toneMapping = THREE.CineonToneMapping;
-        this.renderer.toneMappingExposure = 0.4;
+        this.renderer.toneMappingExposure = 0.6;
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.renderer.setClearColor('#dfe7e5');
@@ -25,7 +25,7 @@ export class Renderer{
     animate = ()=>{
         requestAnimationFrame(this.animate);
         this.mainExperience.controls.update()
-        this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.camerasEnabled[0]);
+        this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.camerasEnabled[this.mainExperience.camera.mainCameraIndex]);
     }
 
     resize(){

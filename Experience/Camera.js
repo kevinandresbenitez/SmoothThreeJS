@@ -34,12 +34,18 @@ export class Camera{
         let OrthographicCamera = new THREE.OrthographicCamera(
             (-Sizes.aspect * Sizes.frustrum) / 2,
             (Sizes.aspect * Sizes.frustrum) / 2,
-            (-Sizes.frustrum / 2),
             (Sizes.frustrum / 2),
-            -100,100
+            (-Sizes.frustrum / 2),
+            -10,10
         );
         this.camerasEnabled.push(OrthographicCamera);
-        this.mainExperience.scene.add(OrthographicCamera);
+        this.mainExperience.scene.add(OrthographicCamera);        
+    }
+    addCameraHelper(camera){
+        if(camera instanceof THREE.Camera){
+            // Helper
+            this.mainExperience.scene.add(new THREE.CameraHelper(camera));
+        }
     }
 
     isAnyCameraEnabled(){

@@ -69,6 +69,11 @@ export default class Experience{
         this.camera.addPerspectiveCamera();
         this.camera.addOrthographicCamera();
         this.controls.addOrbitControll(this.camera.camerasEnabled[this.camera.mainCameraIndex],this.canvas);
+        this.camera.addCameraHelper(this.camera.camerasEnabled[1]);
+        this.camera.camerasEnabled[1].position.y = 4;
+        this.camera.camerasEnabled[1].position.z = 5;
+        this.camera.camerasEnabled[1].rotation.x = -Math.PI / 6;            
+
 
         this.camera.camerasEnabled[this.camera.mainCameraIndex].position.z = 10;
         this.camera.camerasEnabled[this.camera.mainCameraIndex].position.y = 10;
