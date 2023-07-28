@@ -135,7 +135,7 @@ class Light{
     }
 
     addAmbientLight(){
-        let ligth = new THREE.AmbientLight('#2ddcbf',1);;
+        let ligth = new THREE.AmbientLight("#ffffff",1);
         this.lightArray.push(ligth);
         this.scene.add(ligth);
     }
@@ -146,7 +146,7 @@ class Light{
         ligth.shadow.camera.far =20;
         ligth.shadow.mapSize.set(2048,2048);
         ligth.shadow.normalBias = 0.5;
-        ligth.position.set(-1.5, 7, 3);
+        ligth.position.set(1.5, 7, 3);
         this.lightArray.push(ligth);
         this.scene.add(ligth);
     }
