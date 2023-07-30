@@ -7,7 +7,8 @@ import * as THREE from 'three';
 import { Sizes } from "./utils/Sizes";
 import {WindowEvents} from "./WindowEvents";
 import { Controls } from "./Controls";
-
+import { configureModel } from "./public/models/RoomConfig";
+import { Helper } from "./Helper";
 
 //Enable smooth js
 SmoothScroll.enable();
@@ -20,6 +21,7 @@ export default class Experience{
     scene;
     windowEvents;
     controls;
+    helper;
     ModelfileToLoad = 'Room.glb';
 
     static Instance;
@@ -41,6 +43,7 @@ export default class Experience{
         this.resources = new Resources();
         this.windowEvents = new WindowEvents();
         this.controls = new Controls();
+        this.helper = new Helper();
     }
 
     async run(){
@@ -61,25 +64,35 @@ export default class Experience{
     }
 
     configureWorld(){
+        // Configure world and add to the scene
+        configureModel(this.resources.scene_Model);
+        this.scene.add(this.resources.scene_main);
+
+        // Add ligths
         this.resources.ligth.addAmbientLight();
         this.resources.ligth.addSunLigth()
-        this.resources.scene_main.scale.set(0.11,0.11,0.11);
-        this.resources.configureModel(this.resources.scene_Model)
 
-        this.camera.addPerspectiveCamera();
-        this.camera.addOrthographicCamera();
-        this.controls.addOrbitControll(this.camera.camerasEnabled[this.camera.mainCameraIndex],this.canvas);
-        this.camera.addCameraHelper(this.camera.camerasEnabled[1]);
-        this.camera.camerasEnabled[1].position.y = 4;
-        this.camera.camerasEnabled[1].position.z = 5;
-        this.camera.camerasEnabled[1].rotation.x = -Math.PI / 6;            
+        // Add cameras
+        this.camera.addPerspectiveCamera('PerspectiveCamera_1');
+        this.camera.addOrthographicCamera('OrthographicCamera_1');
 
+        // Add Orbit Control
+        this.controls.addOrbitControll(this.camera.camerasItems.PerspectiveCamera_1,this.canvas);
+        
+        // Add helpers
+        this.helper.addCameraHelper(this.camera.camerasItems.OrthographicCamera_1);
+        this.helper.addGridHelper(10,10)
+        this.helper.addChangerCameras();
 
-        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.z = 10;
-        this.camera.camerasEnabled[this.camera.mainCameraIndex].position.y = 10;
-        this.camera.camerasEnabled[this.camera.mainCameraIndex].lookAt(this.resources.scene_main.position);
+        // Configure cameras
+        this.camera.camerasItems.OrthographicCamera_1.position.y = 4;
+        this.camera.camerasItems.OrthographicCamera_1.position.z = 5;
+        this.camera.camerasItems.OrthographicCamera_1.rotation.x = -Math.PI / 6;
+        this.camera.camerasItems.PerspectiveCamera_1.position.z = 10;
+        this.camera.camerasItems.PerspectiveCamera_1.position.y = 10;
+        this.camera.camerasItems.PerspectiveCamera_1.lookAt(this.resources.scene_main.position);
 
-        this.scene.add(this.resources.scene_main);
+        
     }
 
     resize = ()=>{

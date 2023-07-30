@@ -1,12 +1,12 @@
 import Experience  from "./Experience";
 import { Sizes } from "./utils/Sizes";
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class Camera{
     mainExperience;
     camerasEnabled = [];
     #mainCameraIndex = 0;
+    camerasItems = {};
 
     constructor(){
         this.mainExperience = new Experience();
@@ -25,12 +25,26 @@ export class Camera{
     }
     //Setters and getters
 
-    addPerspectiveCamera(){
+    addPerspectiveCamera(cameraName){
+        if(!cameraName){
+            throw new Error('Camera need name');
+        }
+        if(cameraName in this.camerasItems){
+            throw new Error('Camera '+cameraName+' Already exist');
+        }
+
         let PerspectiveCamera = new THREE.PerspectiveCamera( 35, Sizes.aspect, 0.1, 1000 );
         this.camerasEnabled.push(PerspectiveCamera);
         this.mainExperience.scene.add(PerspectiveCamera);
+        this.camerasItems[cameraName] = PerspectiveCamera;
     };
-    addOrthographicCamera(){
+    addOrthographicCamera(cameraName){
+        if(!cameraName){
+            throw new Error('Camera need name');
+        }
+        if(cameraName in this.camerasItems){
+            throw new Error('Camera '+cameraName+' Already exist');
+        }
         let OrthographicCamera = new THREE.OrthographicCamera(
             (-Sizes.aspect * Sizes.frustrum) / 2,
             (Sizes.aspect * Sizes.frustrum) / 2,
@@ -39,7 +53,8 @@ export class Camera{
             -10,10
         );
         this.camerasEnabled.push(OrthographicCamera);
-        this.mainExperience.scene.add(OrthographicCamera);        
+        this.mainExperience.scene.add(OrthographicCamera);
+        this.camerasItems[cameraName] = OrthographicCamera;
     }
     addCameraHelper(camera){
         if(camera instanceof THREE.Camera){
