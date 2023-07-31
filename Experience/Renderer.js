@@ -25,7 +25,7 @@ export class Renderer{
     animate = ()=>{
         requestAnimationFrame(this.animate);
         this.mainExperience.controls.update()
-        this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.camerasEnabled[this.mainExperience.camera.mainCameraIndex]);
+        this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.getMainCamera());
     }
 
     resize(){

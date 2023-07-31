@@ -9,6 +9,7 @@ import {WindowEvents} from "./WindowEvents";
 import { Controls } from "./Controls";
 import { configureModel } from "./public/models/RoomConfig";
 import { Helper } from "./Helper";
+import { CurvesCamera } from "./CurvesCamera";
 
 //Enable smooth js
 SmoothScroll.enable();
@@ -22,6 +23,7 @@ export default class Experience{
     windowEvents;
     controls;
     helper;
+    curvesCamera;
     ModelfileToLoad = 'Room.glb';
 
     static Instance;
@@ -44,6 +46,7 @@ export default class Experience{
         this.windowEvents = new WindowEvents();
         this.controls = new Controls();
         this.helper = new Helper();
+        this.curvesCamera = new CurvesCamera();
     }
 
     async run(){
@@ -81,7 +84,7 @@ export default class Experience{
         
         // Add helpers
         this.helper.addCameraHelper(this.camera.camerasItems.OrthographicCamera_1);
-        this.helper.addGridHelper(10,10)
+        this.helper.addGridHelper(20,20)
         this.helper.addChangerCameras();
 
         // Configure cameras
@@ -91,8 +94,13 @@ export default class Experience{
         this.camera.camerasItems.PerspectiveCamera_1.position.z = 10;
         this.camera.camerasItems.PerspectiveCamera_1.position.y = 10;
         this.camera.camerasItems.PerspectiveCamera_1.lookAt(this.resources.scene_main.position);
-
         
+
+        // Adding curves follow up cameras
+        this.curvesCamera.addCurveElement();
+        this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
+        this.curvesCamera.startMovimentsCameras();
+            
     }
 
     resize = ()=>{

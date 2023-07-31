@@ -50,7 +50,7 @@ export class Camera{
             (Sizes.aspect * Sizes.frustrum) / 2,
             (Sizes.frustrum / 2),
             (-Sizes.frustrum / 2),
-            -10,10
+            -20,20
         );
         this.camerasEnabled.push(OrthographicCamera);
         this.mainExperience.scene.add(OrthographicCamera);
@@ -93,5 +93,12 @@ export class Camera{
         });
 
 
+    }
+
+    getMainCamera(){
+        if(!this.isAnyCameraEnabled()){
+            return false
+        }
+        return this.camerasEnabled[this.#mainCameraIndex];
     }
 }
