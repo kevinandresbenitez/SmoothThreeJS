@@ -62,6 +62,7 @@ export default class Experience{
     main = ()=>{
         this.onLoad();
         this.windowEvents.add("resize",this.resize);
+        this.windowEvents.add("mousemove",this.mouseMove);
         this.configureWorld();
         this.renderer.animate();
     }
@@ -89,7 +90,7 @@ export default class Experience{
 
         // Configure cameras
         this.camera.camerasItems.OrthographicCamera_1.position.y = 4;
-        this.camera.camerasItems.OrthographicCamera_1.position.z = 5;
+        this.camera.camerasItems.OrthographicCamera_1.position.z = 6;
         this.camera.camerasItems.OrthographicCamera_1.rotation.x = -Math.PI / 6;
         this.camera.camerasItems.PerspectiveCamera_1.position.z = 10;
         this.camera.camerasItems.PerspectiveCamera_1.position.y = 10;
@@ -97,16 +98,21 @@ export default class Experience{
         
 
         // Adding curves follow up cameras
-        this.curvesCamera.addCurveElement();
-        this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
-        this.curvesCamera.startMovimentsCameras();
+        // this.curvesCamera.addCurveElement();
+        // this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
+        // this.curvesCamera.startMovimentsCameras();
             
     }
 
+    // functions window
     resize = ()=>{
         Sizes.updateSizes();
         this.renderer.resize();
         this.camera.resize()
+    }
+    mouseMove=(event)=>{
+        let rotation =(((event.clientX - Sizes.width / 2)*2) / Sizes.width)/10;
+        this.resources.scene_main.rotation.y = rotation
     }
 
     //Extern funcion
