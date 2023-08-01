@@ -85,10 +85,10 @@ export class Camera{
         // Update properties in camera ortograpic 
         this.camerasEnabled.forEach((camera)=>{
             if(camera instanceof THREE.OrthographicCamera){
-                camera.left = Sizes.width / -2;
-                camera.right = Sizes.width / 2;
-                camera.top = Sizes.height / 2;
-                camera.bottom = Sizes.height / -2;
+                camera.left = (-Sizes.aspect * Sizes.frustrum) / 2;
+                camera.right = (Sizes.aspect * Sizes.frustrum) / 2;
+                camera.top = (Sizes.frustrum / 2);
+                camera.bottom = (-Sizes.frustrum / 2);
             }
         });
 
