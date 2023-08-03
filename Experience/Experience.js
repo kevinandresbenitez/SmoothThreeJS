@@ -12,7 +12,8 @@ import { Helper } from "./Helper";
 import { CurvesCamera } from "./CurvesCamera";
 
 //Enable smooth js
-SmoothScroll.enable();
+SmoothScroll.enableSmooth();
+SmoothScroll.disableWindowScroll();
 
 export default class Experience{
     canvas;
@@ -101,7 +102,9 @@ export default class Experience{
         // this.curvesCamera.addCurveElement();
         // this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
         // this.curvesCamera.startMovimentsCameras();
-            
+        
+        //Add scroll window event
+        SmoothScroll.enableWindowScroll();
     }
 
     // functions window

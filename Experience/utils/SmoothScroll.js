@@ -2,7 +2,7 @@ import Lenis from "@studio-freight/lenis"
 
 
 export default class SmoothScroll{
-    static enable(){
+    static enableSmooth(){
         const lenis = new Lenis()        
         function raf(time) {
         lenis.raf(time)
@@ -10,5 +10,13 @@ export default class SmoothScroll{
         }
 
         requestAnimationFrame(raf)
+    }
+
+    static disableWindowScroll(){
+        document.body.style.overflow='hidden';
+    }
+
+    static enableWindowScroll(){
+        document.body.style.overflowY = 'scroll';
     }
 }
