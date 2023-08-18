@@ -1,7 +1,7 @@
 import Experience from "./Experience/Experience";
 
 // Experience
-let experience = new Experience(document.getElementById('canvas'));
+let experience = new Experience(document.getElementById('experience__canvas'));
 experience.run();
 experience.onLoad = removePageLoader;
 // Experience

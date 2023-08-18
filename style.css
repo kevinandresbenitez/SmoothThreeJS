@@ -1,11 +1,76 @@
-#canvas{
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Roboto&display=swap');
+
+
+
+
+
+html,body{
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#experience__canvas{
     width: 100vw;
     height: 100vh;
     position: fixed;
 }
 
-.container{
+.experience{
     width: 100%;
-    height: 300vh;
+    height: 100vh;
     overflow: hidden;
+    position: fixed;
+    z-index: -1;
+}
+
+.container{
+    min-height: 300vh;
+}
+
+/* HEADER-------------------------------------- */
+.container .header{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .header .wrapper{
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+}
+
+.container .header .wrapper .tools{
+    align-self: flex-end;
+}
+.container .header .wrapper .info {
+    align-self: flex-start;
+}
+.container .header .wrapper .info .info__title{
+    font-size: 64px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.container .header .wrapper .info .info__profetion{
+    font-size: 30px;
+    margin-top: 0;
+    margin: left;
+}
+/* HEADER-------------------------------------- */
+
+@media(max-width:900px){
+    .container .header .wrapper{
+        width: 90%;
+    }
+
+    .container .header .wrapper .info .info__title{
+        font-size: 32px;
+    }
+    .container .header .wrapper .info .info__profetion{
+        font-size: 16px;
+    }
 }
