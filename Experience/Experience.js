@@ -10,6 +10,7 @@ import { Controls } from "./Controls";
 import { configureModel } from "./public/models/RoomConfig";
 import { Helper } from "./Helper";
 import { CurvesCamera } from "./CurvesCamera";
+import { Gsap } from "./Gsap";
 
 //Enable smooth js
 SmoothScroll.enableSmooth();
@@ -48,6 +49,7 @@ export default class Experience{
         this.controls = new Controls();
         this.helper = new Helper();
         this.curvesCamera = new CurvesCamera();
+        this.gsap = new Gsap();
     }
 
     async run(){
@@ -56,12 +58,13 @@ export default class Experience{
 
        let elementsAreLoaded = await this.resources.loadAssets(this.ModelfileToLoad);
        if(elementsAreLoaded){
-            this.main();
+            this.onModelsLoaded();
        }
     }
     
-    main = ()=>{
+    onModelsLoaded = ()=>{
         this.onLoad();
+        this.gsap.addScrollAnimation();
         this.windowEvents.add("resize",this.resize);
         this.windowEvents.add("mousemove",this.mouseMove);
         this.configureWorld();

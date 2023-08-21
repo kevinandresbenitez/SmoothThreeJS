@@ -43,7 +43,7 @@ html,body{
 }
 
 .container .header .wrapper{
-    width: 60%;
+    width: 70%;
     height: 100vh;
     display: flex;
     flex-flow: column wrap;
@@ -60,19 +60,20 @@ html,body{
 }
 .container .header .wrapper .info .info__title{
     font-size: 64px;
-    font-weight: 500;
+    font-weight: 800;
     margin-bottom: 0;
 }
 .container .header .wrapper .info .info__profetion{
     font-size: 30px;
     margin-top: 0;
-    margin: left;
+    margin: 2px;
 }
 /* HEADER-------------------------------------- */
 /*ABOUT ME*/
 .second_section{
     height: 100vh;
     width: 100vw;
+    margin-top: 100vh;
 }
 .second_section .about_me_col{
     height: 150vh;
@@ -106,4 +107,11 @@ html,body{
     .container .header .wrapper .info .info__profetion{
         font-size: 16px;
     }
+}
+
+@media(max-width:700px){
+    .second_section .about_me_col{
+        width: 100vw;
+    }
+
 }
