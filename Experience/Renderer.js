@@ -6,7 +6,7 @@ export class Renderer{
     mainExperience;
     constructor(){
         this.mainExperience = new Experience();
-        this.renderer = new THREE.WebGLRenderer({canvas:this.mainExperience.canvas,antialias:true});
+        this.renderer = new THREE.WebGLRenderer({canvas:this.mainExperience.canvas,antialias:false});
     }
 
     configureRenderer(){

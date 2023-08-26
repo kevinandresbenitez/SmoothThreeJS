@@ -69,32 +69,40 @@ html,body{
     margin: 2px;
 }
 /* HEADER-------------------------------------- */
-/*ABOUT ME*/
+
+/* ABOUT ME-------------------------------------- */
 .second_section{
-    height: 100vh;
+    height: 150vh;
     width: 100vw;
     margin-top: 100vh;
 }
 .second_section .about_me_col{
-    height: 150vh;
+    border-radius: 0 5rem 5rem 0 ;
+    height: 100%;
     width: 50vw;
     background-color: var(--primary-color);
-}
-.second_section .about_me_col .about_me_title{
-    font-size: 24px;
-    font-weight: 800;
-}
-.second_section .about_me_col .about_me_row{
-    padding: 15px 30px;
-}
-.second_section .about_me_col .about_me_row .about_me_subtitle{
-    font-size: 18px;
-    font-weight: 600;
-    padding-bottom: 10px;
-    display:block;
+    position: relative;
 }
 
-/* HEADER-------------------------------------- */
+/* ABOUT ME-------------------------------------- */
+
+/* My Proyects-------------------------------------- */
+.third_section{
+    height: 100vh;
+    width: 100vw;
+    margin-top: 150vh;
+    display: flex;
+    justify-content: end;
+}
+.third_section .my_proyects_col{
+    border-radius: 5rem 0 0 5rem ;
+    height: 100vh;
+    width: 50vw;
+    background-color: var(--primary-color);
+    position: relative;
+}
+
+/* My Proyects-------------------------------------- */
 
 @media(max-width:900px){
     .container .header .wrapper{
@@ -111,6 +119,10 @@ html,body{
 
 @media(max-width:700px){
     .second_section .about_me_col{
+        width: 100vw;
+    }
+
+    .third_section .my_proyects_col{
         width: 100vw;
     }
 

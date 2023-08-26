@@ -64,10 +64,10 @@ export default class Experience{
     
     onModelsLoaded = ()=>{
         this.onLoad();
-        this.gsap.addScrollAnimation();
         this.windowEvents.add("resize",this.resize);
         this.windowEvents.add("mousemove",this.mouseMove);
         this.configureWorld();
+        this.gsap.addScrollAnimation();
         this.renderer.animate();
     }
 
@@ -76,13 +76,16 @@ export default class Experience{
         configureModel(this.resources.scene_Model);
         this.scene.add(this.resources.scene_main);
 
+        // Add media querys models
+        this.gsap.addMediaQuerysScene();
+
         // Add ligths
         this.resources.ligth.addAmbientLight();
         this.resources.ligth.addSunLigth()
 
         // Add cameras
-        this.camera.addPerspectiveCamera('PerspectiveCamera_1');
         this.camera.addOrthographicCamera('OrthographicCamera_1');
+        this.camera.addPerspectiveCamera('PerspectiveCamera_1');
 
         // Add Orbit Control
         this.controls.addOrbitControll(this.camera.camerasItems.PerspectiveCamera_1,this.canvas);

@@ -15,12 +15,12 @@ export function configureModel(model){
             }
 
             if (element.name === "Aquarium") {
-                element.material = new THREE.MeshPhysicalMaterial();
-                element.material.roughness = 0;
-                element.material.color.set(0x549dd2);
-                element.material.ior = 3;
-                element.material.transmission = 1;
-                element.material.opacity = 1;
+                element.children[0].material = new THREE.MeshPhysicalMaterial();
+                element.children[0].material.roughness = 0;
+                element.children[0].material.color.set(0x549dd2);
+                element.children[0].material.ior = 3;
+                element.children[0].material.transmission = 1;
+                element.children[0].material.opacity = 1;
             }
 
             // Elements in the mini floor
