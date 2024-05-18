@@ -12,6 +12,7 @@ import { Helper } from "./Helper";
 import { CurvesCamera } from "./CurvesCamera";
 import { Gsap } from "./Gsap";
 
+
 //Enable smooth js
 SmoothScroll.enableSmooth();
 SmoothScroll.disableWindowScroll();
@@ -66,12 +67,12 @@ export default class Experience{
         this.onLoad();
         this.windowEvents.add("resize",this.resize);
         this.windowEvents.add("mousemove",this.mouseMove);
-        this.configureWorld();
+        this.configureExperience();
         this.gsap.addScrollAnimation();
         this.renderer.animate();
     }
 
-    configureWorld(){
+    configureExperience(){
         // Configure world and add to the scene
         configureModel(this.resources.scene_Model);
         this.scene.add(this.resources.scene_main);
@@ -91,9 +92,13 @@ export default class Experience{
         this.controls.addOrbitControll(this.camera.camerasItems.PerspectiveCamera_1,this.canvas);
         
         // Add helpers
+        /*
         this.helper.addCameraHelper(this.camera.camerasItems.OrthographicCamera_1);
         this.helper.addGridHelper(20,20)
         this.helper.addChangerCameras();
+        this.helper.addGuiCamera(this.camera.camerasItems.OrthographicCamera_1)
+        */
+
 
         // Configure cameras
         this.camera.camerasItems.OrthographicCamera_1.position.y = 4;
@@ -105,10 +110,11 @@ export default class Experience{
         
 
         // Adding curves follow up cameras
-        // this.curvesCamera.addCurveElement();
-        // this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
-        // this.curvesCamera.startMovimentsCameras();
-        
+        /*
+        this.curvesCamera.addCurveElement();
+        this.curvesCamera.addCameraFollowUp(this.camera.camerasItems.OrthographicCamera_1,this.resources.scene_main.position);
+        this.curvesCamera.startMovimentsCameras();
+        */
         //Add scroll window event
         SmoothScroll.enableWindowScroll();
     }

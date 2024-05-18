@@ -95,14 +95,33 @@ html,body{
     justify-content: end;
 }
 .third_section .my_proyects_col{
-    border-radius: 5rem 0 0 5rem ;
-    height: 100vh;
+    border-radius: 5rem 0 0 0 ;
+    height: 200vh;
     width: 50vw;
     background-color: var(--primary-color);
     position: relative;
 }
 
 /* My Proyects-------------------------------------- */
+
+/*Contact */
+.fourd_section{
+    margin-top: 100vh;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: end;
+    border-radius: 0px;
+
+}
+.fourd_section .contact_col{
+    border-radius: 0;
+    height: 100vh;
+    width: 50vw;
+    background-color: var(--primary-color);
+    position: relative;
+}
+
 
 @media(max-width:900px){
     .container .header .wrapper{
@@ -123,6 +142,10 @@ html,body{
     }
 
     .third_section .my_proyects_col{
+        width: 100vw;
+    }
+
+    .fourd_section .contact_col{
         width: 100vw;
     }
 

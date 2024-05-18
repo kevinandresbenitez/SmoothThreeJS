@@ -24,7 +24,8 @@ export class Renderer{
 
     animate = ()=>{
         requestAnimationFrame(this.animate);
-        this.mainExperience.controls.update()
+        this.mainExperience.controls.update();
+        this.mainExperience.camera.updateProjectionMatrix();
         this.renderer.render(this.mainExperience.scene,this.mainExperience.camera.getMainCamera());
     }
 

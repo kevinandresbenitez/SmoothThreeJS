@@ -67,14 +67,16 @@ export class Camera{
         return this.camerasEnabled.length;
     }
 
-    resize(){
-        // Update proyection matriz in cameras 
+    updateProjectionMatrix(){
         this.camerasEnabled.forEach((camera)=>{
             if(camera instanceof THREE.PerspectiveCamera || camera instanceof THREE.OrthographicCamera){
                 camera.updateProjectionMatrix()
             }
         });
+    }
 
+    resize(){
+        
         // Update Aspect in cameras perspective 
         this.camerasEnabled.forEach((camera)=>{
             if(camera instanceof THREE.PerspectiveCamera){
@@ -91,8 +93,6 @@ export class Camera{
                 camera.bottom = (-Sizes.frustrum / 2);
             }
         });
-
-
     }
 
     getMainCamera(){
