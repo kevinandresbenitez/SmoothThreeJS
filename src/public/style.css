@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Roboto&display=swap');
+
+
+
+:root{
+    --text-black:#333332;
+    --primary-color:#faf4e5;
+    --primart-pink:#e5a1aa;
+}
+
+html,body{
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-black);
+}
+
+#experience__canvas{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+.experience{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    z-index: -1;
+}
+
+.container{
+    min-height: 300vh;
+}
+
+/* HEADER-------------------------------------- */
+.container .header{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-black);
+}
+
+.container .header .wrapper{
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+}
+
+.container .header .wrapper .tools{
+    align-self: flex-end;
+    color: var(--text-black);
+}
+.container .header .wrapper .info {
+    align-self: flex-start;
+    
+}
+.container .header .wrapper .info .info__title{
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+.container .header .wrapper .info .info__profetion{
+    font-size: 30px;
+    margin-top: 0;
+    margin: 2px;
+}
+/* HEADER-------------------------------------- */
+
+/* ABOUT ME-------------------------------------- */
+.second_section{
+    height: 150vh;
+    width: 100vw;
+    margin-top: 100vh;
+}
+.second_section .about_me_col{
+    border-radius: 0 5rem 5rem 0 ;
+    height: 100%;
+    width: 50vw;
+    background-color: var(--primary-color);
+    position: relative;
+}
+
+/* ABOUT ME-------------------------------------- */
+
+/* My Proyects-------------------------------------- */
+.third_section{
+    height: 100vh;
+    width: 100vw;
+    margin-top: 150vh;
+    display: flex;
+    justify-content: end;
+}
+.third_section .my_proyects_col{
+    border-radius: 5rem 0 0 0 ;
+    height: 200vh;
+    width: 50vw;
+    background-color: var(--primary-color);
+    position: relative;
+}
+
+/* My Proyects-------------------------------------- */
+
+/*Contact */
+.fourd_section{
+    margin-top: 100vh;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: end;
+    border-radius: 0px;
+
+}
+.fourd_section .contact_col{
+    border-radius: 0;
+    height: 100vh;
+    width: 50vw;
+    background-color: var(--primary-color);
+    position: relative;
+}
+
+
+@media(max-width:900px){
+    .container .header .wrapper{
+        width: 90%;
+    }
+
+    .container .header .wrapper .info .info__title{
+        font-size: 32px;
+    }
+    .container .header .wrapper .info .info__profetion{
+        font-size: 16px;
+    }
+}
+
+@media(max-width:700px){
+    .second_section .about_me_col{
+        width: 100vw;
+    }
+
+    .third_section .my_proyects_col{
+        width: 100vw;
+    }
+
+    .fourd_section .contact_col{
+        width: 100vw;
+    }
+
+}

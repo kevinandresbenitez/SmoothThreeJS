@@ -1,0 +1,32 @@
+{
+  "name": "smooth_three_js",
+  "version": "1.0.0",
+  "description": "This is a Portafolio with Three JS",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/kevinandresbenitez/SmoothThreeJS",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "serve": "webpack serve --config webpack.config.js",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "three": "^0.154.0",
+    "webpack": "^5.97.1"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "less": "^4.2.1",
+    "less-loader": "^12.2.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}

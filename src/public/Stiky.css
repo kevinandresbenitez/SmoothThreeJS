@@ -1,0 +1,22 @@
+.stiky_section{
+    position: sticky;
+    top: 0;
+}
+
+.stiky_section .stiky_section_row{
+    padding: 15px 30px;
+}
+.stiky_section .stiky_section_row:last-child{
+    padding-bottom: 40px;
+}
+
+.stiky_section .stiky_section_row .stiky_title{
+    font-size: 24px;
+    font-weight: 800;
+}
+.stiky_section .stiky_section_row .stiky_subtitle{
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    display:block;
+}
