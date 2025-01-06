@@ -3,7 +3,7 @@ const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.ts',
     mode: 'development',
 
     output: {
@@ -44,4 +44,8 @@ module.exports = {
             ],
           }),
     ],
+
+    resolve: {
+      extensions: ['.ts','.js'],
+    },
 };

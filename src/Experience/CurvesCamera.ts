@@ -1,15 +1,18 @@
+import { CatmullRomCurve3 } from "three";
 import Experience  from "./Experience";
 import * as THREE from 'three';
+import { Vector3 } from "three";
+import { Camera } from "three";
 
 export class CurvesCamera{
-    mainExperience;
-    curveObject;
-    camerasFollowUp = [];
-    camerasLookAt = [];
-    vectorFollowUp = new THREE.Vector3(0,0,0);
-    CountFrameVector = 0 ;
-    speedInMs = 25;
-    IntervalInstance;
+    mainExperience:Experience;
+    curveObject!:CatmullRomCurve3;
+    camerasFollowUp:Camera[] = [];
+    camerasLookAt:Vector3[] = [];
+    vectorFollowUp:Vector3 = new THREE.Vector3(0,0,0);
+    CountFrameVector:number = 0 ;
+    speedInMs:number = 25;
+    IntervalInstance:any;
 
     constructor(){
         this.mainExperience = new Experience();
@@ -35,21 +38,7 @@ export class CurvesCamera{
         this.mainExperience.scene.add(curveObject);
     }
 
-    getMainCurve(){
-        return this.curveObject;
-    }
-
-    isCurveEnable(){
-        return (this.curveObject);
-    }
-
-    addCameraFollowUp(camera,position){
-        if(!camera || !(camera instanceof THREE.Camera)){
-            throw Error('Need camera valid instance');
-        }
-        if(!position || !position instanceof THREE.Vector3){
-            throw Error('Need position vector 3');
-        }
+    addCameraFollowUp(camera:Camera,position:Vector3){
         this.camerasFollowUp.push(camera);
         this.camerasLookAt.push(position);
     }
@@ -63,7 +52,7 @@ export class CurvesCamera{
             this.curveObject.getPoint(this.CountFrameVector,this.vectorFollowUp);
 
             // Apli cameras changes
-            this.camerasFollowUp.forEach((camera,indice)=>{
+            this.camerasFollowUp.forEach((camera:THREE.Object3D,indice)=>{
                 camera.position.copy(this.vectorFollowUp);
                 camera.lookAt(this.camerasLookAt[indice])
             })

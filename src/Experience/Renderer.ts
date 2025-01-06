@@ -3,7 +3,8 @@ import Experience  from "./Experience";
 import { Sizes } from './utils/Sizes';
 
 export class Renderer{
-    mainExperience;
+    mainExperience:Experience;
+    renderer:THREE.WebGLRenderer;
     constructor(){
         this.mainExperience = new Experience();
         this.renderer = new THREE.WebGLRenderer({canvas:this.mainExperience.canvas,antialias:true});
@@ -11,7 +12,7 @@ export class Renderer{
 
     configureRenderer(){
         this.resize();
-        this.renderer.useLegacyLight = true;
+        //this.renderer.useLegacyLight = true;
         this.renderer.toneMapping = THREE.CineonToneMapping;
         this.renderer.toneMappingExposure = 0.6;
         this.renderer.shadowMap.enabled = true;

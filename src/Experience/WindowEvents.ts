@@ -1,27 +1,27 @@
 import Experience from "./Experience";
 export class WindowEvents{
-    mainExperience;
-    eventsArray = [];
+    mainExperience:Experience;
+    eventsArray:EventListener[]= [];
 
     constructor(){
         this.mainExperience = new Experience();
     }
 
-    add(eventName,callback){
-        if(!('on'+ eventName in window)){
-            return false
+    add(eventName:string,callback:EventListener){
+        if (!(eventName in window)) {
+            return false;
         }
 
         window.addEventListener(eventName,callback);
         this.eventsArray.push(callback);
     }
 
-    remove(callback){
-        if(!('on'+ eventName in window)){
-            return false
+    remove(eventName:string,callback:EventListener){
+        if (!(eventName in window)) {
+            return false;
         }
         
-        window.removeEventListener(callback);
+        window.removeEventListener(eventName,callback);
         this.eventsArray  = this.eventsArray.filter((event)=>event !== callback);
     }
 }

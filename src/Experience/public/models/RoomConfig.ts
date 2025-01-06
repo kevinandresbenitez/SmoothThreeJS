@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-
-export function configureModel(model){
+//@ts-ignore types
+export function configureModel(model:any){
         // load element from the model
-        model.scene.children.forEach((element)=>{
+        model.scene.children.forEach((element:any)=>{
             element.castShadow = true;
             element.receiveShadow = true;          
 

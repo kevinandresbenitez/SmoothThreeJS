@@ -166,8 +166,8 @@ export class Gsap{
         if(!this.mainExperience.resources.scene_Model){
             console.warn('models not are loaded for mediaQuerys')
         }
-        const model =this.mainExperience.resources.scene_main;
-        const matchMadia = new gsap.matchMedia();
+        // const model =this.mainExperience.resources.scene_main;
+        // const matchMadia = new gsap.matchMedia();
 
 
 

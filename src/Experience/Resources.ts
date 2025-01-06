@@ -1,19 +1,25 @@
 import Experience  from "./Experience";
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { GLTFLoader ,GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
+//@ts-ignore types
 import RoomModel from './public/models/Room.glb';
 
 import * as THREE from 'three';
+import { Scene } from "three";
+import { AmbientLight } from "three";
+import { DirectionalLight } from "three";
 
 export class Resources{
-    mainExperience;
-    loaders = {};
-    scene_Model;
-    scene_main;
-    scene_items = {};
-    ligth;
+    mainExperience:Experience;
+    GLTFLoader!:GLTFLoader;
+    DRACOLoader!:DRACOLoader;
 
-    #__PublicDir = '../Experience/public/';
+    scene_Model!:GLTF;
+    scene_main!:GLTF['scene'];
+    scene_items: { [key: string]: THREE.Object3D } = {};
+    ligth:Light;
+
 
     constructor(){
         this.mainExperience = new Experience();
@@ -21,21 +27,19 @@ export class Resources{
     }
 
     configureLoaders(){
-        this.loaders.GLTFLoader = new GLTFLoader();
-        this.loaders.DRACOLoader = new DRACOLoader();
+        this.GLTFLoader = new GLTFLoader();
+        this.DRACOLoader = new DRACOLoader();
 
         // Configure loaders
-        this.loaders.DRACOLoader.setDecoderPath('./public/draco/' );
-        this.loaders.GLTFLoader.setDRACOLoader(this.loaders.DRACOLoader);
+        this.DRACOLoader.setDecoderPath('./public/draco/' );
+        this.GLTFLoader.setDRACOLoader(this.DRACOLoader);
     }
-
 
 
     async loadAssets(){
         // GLTF Loader 
-
-        let filesLoaded = await new Promise((resolve,reject)=>{
-            this.loaders.GLTFLoader.load(RoomModel,(file)=>{resolve(file)}); 
+        let filesLoaded:GLTF = await new Promise((resolve,reject)=>{
+            this.GLTFLoader.load(RoomModel,(file:any)=>{resolve(file)}); 
         });
         
         return new Promise((resolve,reject)=>{
@@ -56,19 +60,18 @@ export class Resources{
 }
 
 class Light{
-    scene;
-    lightArray = [];
+    scene:Scene;
 
-    constructor(Scene){
-        if(!(Scene instanceof THREE.Scene)){
-            throw new Error('Error, light need a THREE.Scene instance in constructor')
-        }
+    ambientLight!:AmbientLight;
+    directionalLight!:DirectionalLight;
+
+    constructor(Scene:Scene){
         this.scene = Scene;
     }
 
     addAmbientLight(){
         let ligth = new THREE.AmbientLight("#ffffff",1);
-        this.lightArray.push(ligth);
+        this.ambientLight = ligth;
         this.scene.add(ligth);
     }
     
@@ -79,13 +82,9 @@ class Light{
         ligth.shadow.mapSize.set(2048,2048);
         ligth.shadow.normalBias = 0.5;
         ligth.position.set(-1.5, 7, 3);
-        this.lightArray.push(ligth);
+        this.directionalLight = ligth;
         this.scene.add(ligth);
     }
 
-    removeLight(ligthRemove){
-        this.scene.remove(ligthRemove)
-        this.lightArray  = this.lightArray.filter((ligth)=>ligth !== ligthRemove);
-    }
 
 }
