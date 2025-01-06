@@ -25,7 +25,7 @@ export class Resources{
         this.loaders.DRACOLoader = new DRACOLoader();
 
         // Configure loaders
-        this.loaders.DRACOLoader.setDecoderPath('/draco/' );
+        this.loaders.DRACOLoader.setDecoderPath('./public/draco/' );
         this.loaders.GLTFLoader.setDRACOLoader(this.loaders.DRACOLoader);
     }
 

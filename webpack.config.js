@@ -39,7 +39,7 @@ module.exports = {
             patterns: [
               {
                 from: path.resolve(__dirname, 'src/Experience/public/draco'), 
-                to: path.resolve(__dirname, 'dist/draco'),
+                to: path.resolve(__dirname, 'dist/public/draco'),
               },
             ],
           }),
