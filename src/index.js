@@ -1,6 +1,5 @@
 import Experience from "./Experience/Experience";
 import './public/Normalice/index.css'
-import './public/pageLoader.css'
 import './public/Stiky.css'
 import './public/style.css'
 
