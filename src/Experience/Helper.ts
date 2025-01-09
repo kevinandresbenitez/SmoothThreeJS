@@ -23,7 +23,7 @@ export class Helper{
             if(!(event instanceof KeyboardEvent)){
                 return false;
             }
-
+            
             if(event.key == String(this.CameraKey1)){
                 this.mainExperience.camera.mainCamera = this.mainExperience.camera.orthographicCamera;
             }else if(event.key == String(this.CameraKey2)){

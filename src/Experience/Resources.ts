@@ -9,6 +9,7 @@ import * as THREE from 'three';
 import { Scene } from "three";
 import { AmbientLight } from "three";
 import { DirectionalLight } from "three";
+import { configureModel } from "./public/models/RoomConfig";
 
 export class Resources{
     mainExperience:Experience;
@@ -41,6 +42,11 @@ export class Resources{
         let filesLoaded:GLTF = await new Promise((resolve,reject)=>{
             this.GLTFLoader.load(RoomModel,(file:any)=>{resolve(file)}); 
         });
+
+
+        // Configure models
+        configureModel(filesLoaded);
+
         
         return new Promise((resolve,reject)=>{
             this.scene_Model = filesLoaded;

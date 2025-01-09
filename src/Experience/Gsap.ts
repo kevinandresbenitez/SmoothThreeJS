@@ -2,7 +2,7 @@ import Experience  from "./Experience";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { Sizes } from "./utils/Sizes";
-import * as THREE from 'three'
+import SmoothScroll from "./utils/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -166,16 +166,59 @@ export class Gsap{
         if(!this.mainExperience.resources.scene_Model){
             console.warn('models not are loaded for mediaQuerys')
         }
-        // const model =this.mainExperience.resources.scene_main;
-        // const matchMadia = new gsap.matchMedia();
+         const model =this.mainExperience.resources.scene_main;
+         const matchMadia = gsap.matchMedia();
 
 
 
-    //     matchMadia.add("(max-width:900px)",()=>{
-    //         model.scale.set(0.09,0.09,0.09)
-    //     }
-    // )
+         matchMadia.add("(max-width:900px)",()=>{
+             model.scale.set(0.07,0.07,0.07)
+         }
+        )
 
     }
 
+    setAnimationMouseMove(){
+        const mouseMove=(event:any)=>{
+            let rotation =(((event.clientX - Sizes.width / 2)*2) / Sizes.width)/10;
+            this.mainExperience.resources.scene_main.rotation.y = rotation
+        }
+        this.mainExperience.windowEvents.add("mousemove",mouseMove);
+    }
+
+    async startFirstAnimation():Promise<Boolean>{
+        const scene = this.mainExperience.resources.scene_main;
+        const Cube = this.mainExperience.resources.scene_items.Cube;
+        
+        return new Promise((resolve,reject)=>{
+            gsap.to(scene.position,{x:-1.5,delay:2,duration:1});
+            
+
+            gsap.to(scene.position,{duration:1,delay:4,onComplete:()=>{
+                gsap.to(scene.position,{x:0,y:-0.5,duration:1});
+                gsap.to(scene.scale,{x:0.11,z:0.11,y:0.11,duration:1});
+
+                this.mainExperience.curvesCamera.startCamerasAnimations().then((cameraAnimationEnd)=>{
+                    gsap.to(Cube.scale,{x:0,z:0,y:0,duration:1});
+                    resolve(true);
+                })
+                
+            }})
+        })
+        
+      
+        
+    }
+
+    async inicializeAnimations(){
+
+        const firstAnimationEnd = await this.startFirstAnimation();
+
+        if(firstAnimationEnd){
+            this.setAnimationMouseMove();
+            this.addScrollAnimation();
+            this.addMediaQuerysScene();
+            SmoothScroll.enableSmooth();
+        }
+    }
 }

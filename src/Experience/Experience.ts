@@ -11,10 +11,9 @@ import { configureModel } from "./public/models/RoomConfig";
 import { Helper } from "./Helper";
 import { CurvesCamera } from "./CurvesCamera";
 import { Gsap } from "./Gsap";
+import dat from 'dat.gui';
 
-
-//Enable smooth js
-SmoothScroll.enableSmooth();
+// Disable scroll animation
 SmoothScroll.disableWindowScroll();
 
 export default class Experience{
@@ -28,6 +27,7 @@ export default class Experience{
     helper!:Helper;
     curvesCamera!:CurvesCamera;
     gsap!:Gsap;
+    mode: "development" | "production" = "production"; 
 
     static Instance:Experience;
     constructor(canvas?:HTMLCanvasElement){
@@ -63,57 +63,92 @@ export default class Experience{
     
     onModelsLoaded = ()=>{
         this.onLoad();
+        //Add scroll window event
         this.windowEvents.add("resize",this.resize);
-        this.windowEvents.add("mousemove",this.mouseMove);
+        this.windowEvents.add('load',()=>{window.scrollTo(0, 0);});
         this.configureExperience();
-        this.gsap.addScrollAnimation();
+
+        // inicialize animations
+        this.gsap.inicializeAnimations();
         this.renderer.animate();
     }
 
     configureExperience(){
-        // Configure world and add to the scene
-        configureModel(this.resources.scene_Model);
         this.scene.add(this.resources.scene_main);
+
+        
 
         // Add media querys models
         this.gsap.addMediaQuerysScene();
 
         // Add ligths
         this.resources.ligth.addAmbientLight();
-        this.resources.ligth.addSunLigth()
+        this.resources.ligth.addSunLigth();
 
         // Add cameras
         this.camera.addOrthographicCamera();
         this.camera.addPerspectiveCamera();
 
-        // Add Orbit Control
-        this.controls.addOrbitControll(this.camera.perspectiveCamera);
-        
-        // Add helpers
-        
-        // this.helper.addCameraHelper(this.camera.orthographicCamera);
-        // this.helper.addGridHelper(20,20)
-        // this.helper.addChangerCameras();
-        
+        // Add Curve element 
+        this.curvesCamera.addCurveElement();
+        this.curvesCamera.addCameraFollowUp(this.camera.orthographicCamera,this.resources.scene_main.position);
+
+
+        if(this.mode  == "development"){
+            // Add Orbit Control
+            this.controls.addOrbitControll(this.camera.perspectiveCamera);
+            // Add helpers
+            this.helper.addCameraHelper(this.camera.orthographicCamera);
+            this.helper.addGridHelper(20,20)
+            this.helper.addChangerCameras();
+            // Delete dom element
+            // const container:any = document.querySelectorAll('.container')[0];
+            // container.style.display = "none";
+
+            // Data Gui Helper
+            const gui = new dat.GUI();
+            const resourse = this.resources.scene_items.Cube
+            
+            
+            const cubeOption = {positionX:resourse.position.x,positionY:resourse.position.y,positionZ:resourse.position.z,scaleX:resourse.scale.x,scaleY:resourse.scale.y,scaleZ:resourse.scale.z}
+
+            gui.add(cubeOption, 'positionX', -20, 10).onChange((value)=>{
+                resourse.position.x = value;
+            });
+              
+            gui.add(cubeOption, 'positionY', -15, 20).onChange((value)=>{                
+                resourse.position.y = value;
+            });
+              
+            gui.add(cubeOption, 'positionZ', -10, 10).onChange((value)=>{                
+                resourse.position.z = value;
+            });
+
+            gui.add(cubeOption, 'scaleX', -10, 10).onChange((value)=>{
+                resourse.scale.x = value;
+            });
+              
+            gui.add(cubeOption, 'scaleY', -15, 20).onChange((value)=>{                
+                resourse.scale.y = value;
+            });
+              
+            gui.add(cubeOption, 'scaleZ', -10, 10).onChange((value)=>{                
+                resourse.scale.z = value;
+            });
+        }
 
 
         // Configure cameras
         this.camera.orthographicCamera.position.y = 4;
         this.camera.orthographicCamera.position.z = 6;
         this.camera.orthographicCamera.rotation.x = -Math.PI / 6;
+        this.camera.orthographicCamera.lookAt(this.resources.scene_main.position)
+
         this.camera.perspectiveCamera.position.z = 10;
         this.camera.perspectiveCamera.position.y = 10;
         this.camera.perspectiveCamera.lookAt(this.resources.scene_main.position);
-        
 
-        // Adding curves follow up cameras
-        
-        // this.curvesCamera.addCurveElement();
-        // this.curvesCamera.addCameraFollowUp(this.camera.orthographicCamera,this.resources.scene_main.position);
-        // this.curvesCamera.startMovimentsCameras();
-        
-        //Add scroll window event
-        SmoothScroll.enableWindowScroll();
+
     }
 
     // functions window
@@ -122,10 +157,7 @@ export default class Experience{
         this.renderer.resize();
         this.camera.resize()
     }
-    mouseMove=(event:any)=>{
-        let rotation =(((event.clientX - Sizes.width / 2)*2) / Sizes.width)/10;
-        this.resources.scene_main.rotation.y = rotation
-    }
+
 
     //Extern funcion
     onLoad = ()=>{};

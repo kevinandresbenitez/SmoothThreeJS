@@ -8,19 +8,11 @@ export class WindowEvents{
     }
 
     add(eventName:string,callback:EventListener){
-        if (!(eventName in window)) {
-            return false;
-        }
-
         window.addEventListener(eventName,callback);
         this.eventsArray.push(callback);
     }
 
     remove(eventName:string,callback:EventListener){
-        if (!(eventName in window)) {
-            return false;
-        }
-        
         window.removeEventListener(eventName,callback);
         this.eventsArray  = this.eventsArray.filter((event)=>event !== callback);
     }

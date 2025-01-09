@@ -1,10 +1,28 @@
 import * as THREE from 'three'
 //@ts-ignore types
 export function configureModel(model:any){
+
+   
+      // Replace the cube original
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshPhysicalMaterial({ color: '#c7e4d2' });
+      const cube = new THREE.Mesh(geometry, material);      
+      cube.name = "Cube"
+      cube.scale.x = 21;
+      cube.scale.y = 21;
+      cube.scale.z = 21;
+      cube.position.y = 8.5;
+      cube.position.x = 0.6
+      cube.position.z = 1.4
+      cube.rotation.y = 45 * (Math.PI / 180)         
+      model.scene.remove(model.scene.children[0]);
+      model.scene.add(cube)
+      
         // load element from the model
-        model.scene.children.forEach((element:any)=>{
+        model.scene.children.forEach((element:any,key:number)=>{
             element.castShadow = true;
             element.receiveShadow = true;          
+
 
 
             if (element instanceof THREE.Group) {
@@ -37,6 +55,7 @@ export function configureModel(model:any){
                  element.position.z = 3;
                  */
                 element.position.y = -7;
+                element.scale.set(0)
                 
              }
              if(element.name == 'FloorFirst' || element.name == 'FloorSecond' || element.name == 'FloorThird'){
@@ -70,17 +89,23 @@ export function configureModel(model:any){
             
         })
 
+        
+
         // Add Floor
-        const geometry = new THREE.PlaneGeometry(40,40);
-        const material = new THREE.MeshStandardMaterial( {color: '#c7e4d2', side: THREE.BackSide});
-        const plane = new THREE.Mesh( geometry, material );
-        plane.rotation.x = Math.PI / 2;
-        plane.rotation.z =Math.PI /4;
-        plane.position.y = -1.5;
-        plane.receiveShadow = true;
-        model.scene.add(plane);
+      //   const geometry = new THREE.PlaneGeometry(40,40);
+      //   const material = new THREE.MeshStandardMaterial( {color: '#c7e4d2', side: THREE.BackSide});
+      //   const plane = new THREE.Mesh( geometry, material );
+      //   plane.rotation.x = Math.PI / 2;
+      //   plane.rotation.z =Math.PI /4;
+      //   plane.position.y = -1.5;
+      //   plane.receiveShadow = true;
+      //   model.scene.add(plane);
 
         // Size main model
-        model.scene.scale.set(0.11,0.11,0.11)
+        model.scene.position.set(0,0,0)
+        model.scene.scale.set(0.03,0.03,0.03)
+        
+
+
 
 }
