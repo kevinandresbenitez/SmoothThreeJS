@@ -92,9 +92,10 @@ export function configureModel(model:any){
         
 
         // Add Floor
-      //   const geometry = new THREE.PlaneGeometry(40,40);
-      //   const material = new THREE.MeshStandardMaterial( {color: '#c7e4d2', side: THREE.BackSide});
-      //   const plane = new THREE.Mesh( geometry, material );
+      //   const geometry__floor = new THREE.PlaneGeometry(40,40);
+      //   const material__floor = new THREE.MeshStandardMaterial( {color: '#dfe7e5', side: THREE.BackSide});
+      //   const plane = new THREE.Mesh( geometry__floor, material__floor );
+      //   plane.name = "floor"
       //   plane.rotation.x = Math.PI / 2;
       //   plane.rotation.z =Math.PI /4;
       //   plane.position.y = -1.5;

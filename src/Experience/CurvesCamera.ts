@@ -11,7 +11,7 @@ export class CurvesCamera{
     camerasLookAt:Vector3[] = [];
     vectorFollowUp:Vector3 = new THREE.Vector3(0,0,0);
     CountFrameVector:number = 0 ;
-    speedInMs:number = 25;
+    speedInMs:number = 10;
     IntervalInstance:any;
 
     constructor(){
@@ -63,7 +63,7 @@ export class CurvesCamera{
                     resolve(true);
             }
 
-            this.CountFrameVector += 0.006;
+            this.CountFrameVector += 0.005;
         },this.speedInMs);
 
 

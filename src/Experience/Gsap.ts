@@ -191,10 +191,17 @@ export class Gsap{
         const Cube = this.mainExperience.resources.scene_items.Cube;
         
         return new Promise((resolve,reject)=>{
-            gsap.to(scene.position,{x:-1.5,delay:2,duration:1});
-            
 
-            gsap.to(scene.position,{duration:1,delay:4,onComplete:()=>{
+            const tl = gsap.timeline();
+
+
+            tl.to(scene.position,{x:-1.3,duration:1,delay:1});
+
+
+            tl.from(".text_animated",{opacity:0,duration:0.3,y:-20,ease: "power3.out", stagger: 0.05 });
+            tl.to(".text_animated",{opacity:0,duration:0.3,delay:0.5,y:20,ease: "power3.out", stagger: 0.05 });
+
+            tl.to(scene.position,{duration:0.3,onComplete:()=>{
                 gsap.to(scene.position,{x:0,y:-0.5,duration:1});
                 gsap.to(scene.scale,{x:0.11,z:0.11,y:0.11,duration:1});
 
@@ -204,6 +211,7 @@ export class Gsap{
                 })
                 
             }})
+
         })
         
       
@@ -211,14 +219,19 @@ export class Gsap{
     }
 
     async inicializeAnimations(){
+        this.addMediaQuerysScene();
 
         const firstAnimationEnd = await this.startFirstAnimation();
 
         if(firstAnimationEnd){
             this.setAnimationMouseMove();
             this.addScrollAnimation();
-            this.addMediaQuerysScene();
             SmoothScroll.enableSmooth();
+            // Animate text
+            gsap.to(".tools",{opacity:1,delay:0.5 ,duration:1,y:-20,ease: "power3.out"});
+            gsap.to(".info",{opacity:1,delay:0.5 , duration:1,x:-20,ease: "power3.out"});
+            
+            
         }
     }
 }

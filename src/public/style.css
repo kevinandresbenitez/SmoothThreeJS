@@ -52,12 +52,27 @@ html,body{
 
 .container .header .wrapper .tools{
     align-self: flex-end;
+    opacity: 0;
     color: var(--text-black);
 }
 .container .header .wrapper .info {
+    opacity: 0;
     align-self: flex-start;
     
 }
+.container .header .wrapper .name_animated{
+    position:absolute;
+    display: flex;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -100%);
+}
+.container .header .wrapper .name, .container .header .wrapper .last_name{
+    display: flex;
+    gap: 2px;
+    margin: 5px;
+}
+
 .container .header .wrapper .info .info__title{
     font-size: 64px;
     font-weight: 800;
