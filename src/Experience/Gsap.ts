@@ -78,6 +78,7 @@ export class Gsap{
                         markers:false
                     }
         });
+
         gsap.to(itemsAnimation.Mailbox.position,{
                     y: -0.6809930801391602,
                     scrollTrigger:{
@@ -88,6 +89,22 @@ export class Gsap{
                         markers:false
                     }
         });
+
+        gsap.to(itemsAnimation.Mailbox.scale,{
+                    y: 1,
+                    x:1,
+                    z:1,
+                    scrollTrigger:{
+                        trigger:'.fourd_section',
+                        start:'-45% center',
+                        end:'-10% center',
+                        scrub:true,
+                        markers:false
+                    }
+        });
+
+
+
         gsap.to(itemsAnimation.FloorFirst.scale,{
                     x:1,
                     y:1,
@@ -193,7 +210,7 @@ export class Gsap{
         return new Promise((resolve,reject)=>{
 
             const tl = gsap.timeline();
-
+            const floorItem = this.mainExperience.resources.scene_items.floor;
 
             tl.to(scene.position,{x:-1.3,duration:1,delay:1});
 
@@ -207,6 +224,9 @@ export class Gsap{
 
                 this.mainExperience.curvesCamera.startCamerasAnimations().then((cameraAnimationEnd)=>{
                     gsap.to(Cube.scale,{x:0,z:0,y:0,duration:1});
+                    gsap.to(floorItem.scale,{
+                        x:1,y:1,z:1,duration:1
+                    })
                     resolve(true);
                 })
                 

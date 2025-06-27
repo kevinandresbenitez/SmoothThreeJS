@@ -102,39 +102,29 @@ export default class Experience{
             this.helper.addGridHelper(20,20)
             this.helper.addChangerCameras();
             // Delete dom element
-            // const container:any = document.querySelectorAll('.container')[0];
-            // container.style.display = "none";
+            const container:any = document.querySelectorAll('.container')[0];
+            container.style.display = "none";
 
             // Data Gui Helper
             const gui = new dat.GUI();
-            const resourse = this.resources.scene_items.Cube
             
+    
             
-            const cubeOption = {positionX:resourse.position.x,positionY:resourse.position.y,positionZ:resourse.position.z,scaleX:resourse.scale.x,scaleY:resourse.scale.y,scaleZ:resourse.scale.z}
+            const Sunlight = this.scene.children[2]
 
-            gui.add(cubeOption, 'positionX', -20, 10).onChange((value)=>{
-                resourse.position.x = value;
+            gui.add(Sunlight.position, 'x', -20, 10).onChange((value)=>{
+                Sunlight.position.x = value;
             });
               
-            gui.add(cubeOption, 'positionY', -15, 20).onChange((value)=>{                
-                resourse.position.y = value;
+            gui.add(Sunlight.position, 'y', -15, 20).onChange((value)=>{                
+                Sunlight.position.y = value;
             });
               
-            gui.add(cubeOption, 'positionZ', -10, 10).onChange((value)=>{                
-                resourse.position.z = value;
+            gui.add(Sunlight.position, 'z', -10, 10).onChange((value)=>{                
+                Sunlight.position.z = value;
             });
 
-            gui.add(cubeOption, 'scaleX', -10, 10).onChange((value)=>{
-                resourse.scale.x = value;
-            });
-              
-            gui.add(cubeOption, 'scaleY', -15, 20).onChange((value)=>{                
-                resourse.scale.y = value;
-            });
-              
-            gui.add(cubeOption, 'scaleZ', -10, 10).onChange((value)=>{                
-                resourse.scale.z = value;
-            });
+ 
         }
 
 

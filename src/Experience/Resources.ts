@@ -87,7 +87,7 @@ class Light{
         ligth.shadow.camera.far =20;
         ligth.shadow.mapSize.set(2048,2048);
         ligth.shadow.normalBias = 0.5;
-        ligth.position.set(-1.5, 7, 3);
+        ligth.position.set(2, 7, 3);
         this.directionalLight = ligth;
         this.scene.add(ligth);
     }
