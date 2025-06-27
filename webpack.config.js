@@ -41,8 +41,13 @@ module.exports = {
                 from: path.resolve(__dirname, 'src/Experience/public/draco'), 
                 to: path.resolve(__dirname, 'dist/public/draco'),
               },
+              {
+                from: path.resolve(__dirname, 'src/public/imgs'), 
+                to: path.resolve(__dirname, 'dist/public/imgs'),
+              }
             ],
           }),
+          
     ],
 
     resolve: {
