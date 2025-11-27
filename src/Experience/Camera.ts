@@ -1,38 +1,50 @@
 
-import Experience  from "./Experience";
+import Experience from "./Experience";
 import { Sizes } from "./utils/Sizes";
 import * as THREE from 'three';
 
-export class Camera{
-    mainExperience:Experience;
-    
-    perspectiveCamera!:THREE.PerspectiveCamera;
-    orthographicCamera!: THREE.OrthographicCamera;
-    mainCamera!:THREE.Camera;
+export class Camera {
+    mainExperience: Experience;
 
-    constructor(){
+    #perspectiveCamera!: THREE.PerspectiveCamera;
+    #orthographicCamera!: THREE.OrthographicCamera;
+    #mainCamera!: THREE.Camera;
+
+    constructor() {
         this.mainExperience = new Experience();
     }
 
-    getMainCamera():THREE.Camera{
-        return this.mainCamera;
+    setMainCamera(camera: THREE.Camera): void {
+        this.#mainCamera = camera;
     }
-    
-    addPerspectiveCamera():void{
 
-        if(this.perspectiveCamera){
+    getMainCamera(): THREE.Camera {
+        return this.#mainCamera;
+    }
+
+    getPerspectiveCamera(): THREE.PerspectiveCamera {
+        return this.#perspectiveCamera;
+    }
+
+    getOrthographicCamera(): THREE.OrthographicCamera {
+        return this.#orthographicCamera;
+    }
+
+    addPerspectiveCamera(): void {
+
+        if (this.getPerspectiveCamera()) {
             throw new Error('Perspective camera already exist');
         }
 
-        let PerspectiveCamera = new THREE.PerspectiveCamera( 35, Sizes.aspect, 0.1, 1000 );
-        this.perspectiveCamera = PerspectiveCamera;
+        let PerspectiveCamera = new THREE.PerspectiveCamera(35, Sizes.aspect, 0.1, 1000);
+        this.#perspectiveCamera = PerspectiveCamera;
         this.mainExperience.scene.add(PerspectiveCamera);
-        
-    };
-    
-    addOrthographicCamera():void{
 
-        if(this.orthographicCamera){
+    };
+
+    addOrthographicCamera(): void {
+
+        if (this.getOrthographicCamera()) {
             throw new Error('Orthographic camera already exist');
         }
 
@@ -41,40 +53,40 @@ export class Camera{
             (Sizes.aspect * Sizes.frustrum) / 2,
             (Sizes.frustrum / 2),
             (-Sizes.frustrum / 2),
-            -20,20
+            -20, 20
         );
-        this.orthographicCamera = OrthographicCamera;
+        this.#orthographicCamera = OrthographicCamera;
         this.mainExperience.scene.add(OrthographicCamera);
-        this.mainCamera = this.orthographicCamera
-        
+        this.#mainCamera = this.#orthographicCamera
+
     };
 
-    areCamerasEnabled():boolean{
-        return (this.perspectiveCamera != null && this.orthographicCamera != null)
+    areCamerasEnabled(): boolean {
+        return (this.getPerspectiveCamera() != null && this.getOrthographicCamera() != null)
     }
 
-    updateProjectionMatrix():void{
-        if(!this.areCamerasEnabled()){
+    updateProjectionMatrix(): void {
+        if (!this.areCamerasEnabled()) {
             throw Error("Cameras are not enabled")
         }
-        this.perspectiveCamera.updateProjectionMatrix();
-        this.orthographicCamera.updateProjectionMatrix();
+        this.getPerspectiveCamera().updateProjectionMatrix();
+        this.getOrthographicCamera().updateProjectionMatrix();
     }
 
-    resize():void{
-        if(!this.areCamerasEnabled()){
+    resize(): void {
+        if (!this.areCamerasEnabled()) {
             throw Error("Cameras are not enabled")
         }
 
         // Update Aspect in cameras perspective 
-        this.perspectiveCamera.aspect = Sizes.aspect;
+        this.getPerspectiveCamera().aspect = Sizes.aspect;
 
         // Update properties in camera ortograpic 
-        this.orthographicCamera.left = (-Sizes.aspect * Sizes.frustrum) / 2;
-        this.orthographicCamera.right = (Sizes.aspect * Sizes.frustrum) / 2;
-        this.orthographicCamera.top = (Sizes.frustrum / 2);
-        this.orthographicCamera.bottom = (-Sizes.frustrum / 2);
-        
+        this.getOrthographicCamera().left = (-Sizes.aspect * Sizes.frustrum) / 2;
+        this.getOrthographicCamera().right = (Sizes.aspect * Sizes.frustrum) / 2;
+        this.getOrthographicCamera().top = (Sizes.frustrum / 2);
+        this.getOrthographicCamera().bottom = (-Sizes.frustrum / 2);
+
     }
 
 

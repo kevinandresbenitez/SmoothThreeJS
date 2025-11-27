@@ -1,5 +1,5 @@
-import Experience  from "./Experience";
-import { GLTFLoader ,GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
+import Experience from "./Experience";
+import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 //@ts-ignore types
@@ -11,86 +11,95 @@ import { AmbientLight } from "three";
 import { DirectionalLight } from "three";
 import { configureModel } from "./public/models/RoomConfig";
 
-export class Resources{
-    mainExperience:Experience;
-    GLTFLoader!:GLTFLoader;
-    DRACOLoader!:DRACOLoader;
+export class Resources {
+    mainExperience: Experience;
+    #GLTFLoader!: GLTFLoader;
+    #DRACOLoader!: DRACOLoader;
 
-    scene_Model!:GLTF;
-    scene_main!:GLTF['scene'];
-    scene_items: { [key: string]: THREE.Object3D } = {};
-    ligth:Light;
+    #model!: GLTF['scene'];
+    #modelItems: { [key: string]: THREE.Object3D } = {};
 
+    #directionalLight!: DirectionalLight;
+    #ambientLight!: AmbientLight;
 
-    constructor(){
+    constructor() {
         this.mainExperience = new Experience();
-        this.ligth = new Light(this.mainExperience.scene);
     }
 
-    configureLoaders(){
-        this.GLTFLoader = new GLTFLoader();
-        this.DRACOLoader = new DRACOLoader();
+    configureLoaders() {
+        this.#GLTFLoader = new GLTFLoader();
+        this.#DRACOLoader = new DRACOLoader();
 
         // Configure loaders
-        this.DRACOLoader.setDecoderPath('./public/draco/' );
-        this.GLTFLoader.setDRACOLoader(this.DRACOLoader);
+        this.#DRACOLoader.setDecoderPath('./public/draco/');
+        this.#GLTFLoader.setDRACOLoader(this.#DRACOLoader);
     }
 
 
-    async loadAssets(){
+    async loadAssets() {
         // GLTF Loader 
-        let filesLoaded:GLTF = await new Promise((resolve,reject)=>{
-            this.GLTFLoader.load(RoomModel,(file:any)=>{resolve(file)}); 
+        let filesLoaded: GLTF = await new Promise((resolve, reject) => {
+            this.#GLTFLoader.load(RoomModel, (file: any) => { resolve(file) });
         });
 
 
         // Configure models
         configureModel(filesLoaded);
 
-        
-        return new Promise((resolve,reject)=>{
-            this.scene_Model = filesLoaded;
-            this.scene_main = filesLoaded.scene;
-            this.scene_items = {};
-            
+
+        return new Promise((resolve, reject) => {
+            this.#model = filesLoaded.scene;
+            this.#modelItems = {};
+
             //load items in scene
-            this.scene_main.children.forEach((item)=>{
-                this.scene_items[item.name] = item;
+            this.#model.children.forEach((item) => {
+                this.#modelItems[item.name] = item;
             })
-            
-            if(filesLoaded){
+
+            if (filesLoaded) {
                 resolve(true);
             }
         });
     }
-}
 
-class Light{
-    scene:Scene;
-
-    ambientLight!:AmbientLight;
-    directionalLight!:DirectionalLight;
-
-    constructor(Scene:Scene){
-        this.scene = Scene;
+    get scene_main() {
+        return this.#modelItems['scene_main'];
     }
 
-    addAmbientLight(){
-        let ligth = new THREE.AmbientLight("#ffffff",1);
-        this.ambientLight = ligth;
-        this.scene.add(ligth);
-    }
-    
-    addSunLigth(){
-        let ligth = new THREE.DirectionalLight("#ffffff",3);
-        ligth.castShadow = true;
-        ligth.shadow.camera.far =20;
-        ligth.shadow.mapSize.set(2048,2048);
-        ligth.shadow.normalBias = 0.5;
-        ligth.position.set(2, 7, 3);
-        this.directionalLight = ligth;
-        this.scene.add(ligth);
+    getModel() {
+        return this.#model;
     }
 
+    getModelItems() {
+        return this.#modelItems;
+    }
 
+    addModel() {
+        this.mainExperience.scene.add(this.#model);
+    }
+
+    addAmbientLight() {
+        let light = new THREE.AmbientLight("#ffffff", 1);
+        this.mainExperience.scene.add(light);
+        this.#ambientLight = light;
+    }
+
+    addDirectionalLight() {
+        let light = new THREE.DirectionalLight("#ffffff", 3);
+        light.castShadow = true;
+        light.shadow.camera.far = 20;
+        light.shadow.mapSize.set(2048, 2048);
+        light.shadow.normalBias = 0.5;
+        light.position.set(2, 7, 3);
+        this.mainExperience.scene.add(light);
+        this.#directionalLight = light;
+    }
+
+    getDirectionalLight() {
+        return this.#directionalLight;
+    }
+
+    getAmbientLight() {
+        return this.#ambientLight;
+    }
 }

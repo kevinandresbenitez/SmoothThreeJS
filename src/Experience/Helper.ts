@@ -1,33 +1,33 @@
 import * as THREE from 'three';
 import Experience from './Experience';
 
-export class Helper{
-    mainExperience:Experience;
-    CameraKey1:number = 1;
-    CameraKey2:number = 2;
+export class Helper {
+    mainExperience: Experience;
+    CameraKey1: number = 1;
+    CameraKey2: number = 2;
 
-    constructor(){
+    constructor() {
         this.mainExperience = new Experience();
     }
 
-    addGridHelper(rows:number,cols:number){
-        this.mainExperience.scene.add(new THREE.GridHelper(rows,cols));
+    addGridHelper(rows: number, cols: number) {
+        this.mainExperience.scene.add(new THREE.GridHelper(rows, cols));
     }
 
-    addCameraHelper(camera:THREE.Camera){
+    addCameraHelper(camera: THREE.Camera) {
         this.mainExperience.scene.add(new THREE.CameraHelper(camera));
     }
 
-    addChangerCameras(){        
-        this.mainExperience.windowEvents.add("keydown",(event)=>{
-            if(!(event instanceof KeyboardEvent)){
+    addChangerCameras() {
+        this.mainExperience.windowEvents.add("keydown", (event) => {
+            if (!(event instanceof KeyboardEvent)) {
                 return false;
             }
-            
-            if(event.key == String(this.CameraKey1)){
-                this.mainExperience.camera.mainCamera = this.mainExperience.camera.orthographicCamera;
-            }else if(event.key == String(this.CameraKey2)){
-                this.mainExperience.camera.mainCamera = this.mainExperience.camera.perspectiveCamera;
+
+            if (event.key == String(this.CameraKey1)) {
+                this.mainExperience.camera.setMainCamera(this.mainExperience.camera.getOrthographicCamera());
+            } else if (event.key == String(this.CameraKey2)) {
+                this.mainExperience.camera.setMainCamera(this.mainExperience.camera.getPerspectiveCamera());
             }
 
 
