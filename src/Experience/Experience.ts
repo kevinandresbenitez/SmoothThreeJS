@@ -27,7 +27,7 @@ export default class Experience {
     helper!: Helper;
     curvesCamera!: CurvesCamera;
     gsap!: Gsap;
-    mode: "development" | "production" = "development";
+    mode: "development" | "production" = "production";
 
     static Instance: Experience;
     constructor(canvas?: HTMLCanvasElement) {
@@ -65,7 +65,7 @@ export default class Experience {
         this.onLoad();
         //Add scroll window event
         this.windowEvents.add("resize", this.resize);
-        this.windowEvents.add('load', () => { window.scrollTo(0, 0); });
+        window.scrollTo(0, 0);
         this.configureExperience();
 
         // inicialize animations

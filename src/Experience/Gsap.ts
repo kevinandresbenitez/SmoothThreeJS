@@ -3,6 +3,8 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { Sizes } from "./utils/Sizes";
 import SmoothScroll from "./utils/SmoothScroll";
+import { ScaleModel } from "./public/models/scaleModel";
+import { screenPercentToWorldX } from "./utils/screenPercentToWorld";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,10 +17,10 @@ export class Gsap {
 
     addScrollAnimation() {
         const Camera = this.mainExperience.camera.getMainCamera();
-
+        const scene = this.mainExperience.resources.getModel();
 
         gsap.to(Camera.position, {
-            x: () => { return Sizes.aspect * -1.2 },
+            x: () => { return screenPercentToWorldX(Camera, 0.25, scene.position.z)},
             scrollTrigger: {
                 trigger: '.second_section',
                 start: '-100% center',
@@ -28,7 +30,7 @@ export class Gsap {
             }
             , onComplete: () => {
                 gsap.to(Camera.position, {
-                    x: () => { return Sizes.aspect * 0.08 },
+                    x: () => { return screenPercentToWorldX(Camera, 0.5, scene.position.z)},
                     scrollTrigger: {
                         trigger: '.third_section',
                         start: '-120% center',
@@ -39,7 +41,7 @@ export class Gsap {
                 })
 
                 gsap.to(Camera, {
-                    zoom: () => { return Sizes.aspect * 1.2 },
+                    zoom:2,
                     scrollTrigger: {
                         trigger: '.third_section',
                         start: '-120% center',
@@ -50,7 +52,7 @@ export class Gsap {
                 })
 
                 gsap.to(Camera.position, {
-                    z: () => { return Sizes.aspect * 4.2 },
+                    z: () => { return 8},
                     scrollTrigger: {
                         trigger: '.fourd_section',
                         start: '-50% center',
@@ -188,10 +190,10 @@ export class Gsap {
 
 
 
-        matchMadia.add("(max-width:900px)", () => {
-            model.scale.set(0.07, 0.07, 0.07)
-        }
-        )
+        // matchMadia.add("(max-width:900px)", () => {
+        //     model.scale.set(0.07, 0.07, 0.07)
+        // }
+        // )
 
     }
 
@@ -211,8 +213,10 @@ export class Gsap {
 
             const tl = gsap.timeline();
             const floorItem = this.mainExperience.resources.getModelItems().floor;
-
-            tl.to(scene.position, { x: -1.3, duration: 1, delay: 1 });
+            const camera = this.mainExperience.camera.getMainCamera();
+            
+            const targetX = screenPercentToWorldX(camera, 0.35, scene.position.z);
+            tl.to(scene.position, { x: targetX , duration: 1, delay: 1 });
 
 
             tl.from(".text_animated", { opacity: 0, duration: 0.3, y: -20, ease: "power3.out", stagger: 0.05 });
@@ -221,7 +225,8 @@ export class Gsap {
             tl.to(scene.position, {
                 duration: 0.3, onComplete: () => {
                     gsap.to(scene.position, { x: 0, y: -0.5, duration: 1 });
-                    gsap.to(scene.scale, { x: 0.11, z: 0.11, y: 0.11, duration: 1 });
+                    const bigScale = ScaleModel.getBigScale()
+                    gsap.to(scene.scale, { x: bigScale, z: bigScale, y: bigScale, duration: 1 });
 
                     this.mainExperience.curvesCamera.startCamerasAnimations().then((cameraAnimationEnd) => {
                         gsap.to(Cube.scale, { x: 0, z: 0, y: 0, duration: 1 });
@@ -247,7 +252,9 @@ export class Gsap {
 
         if (firstAnimationEnd) {
             this.setAnimationMouseMove();
-            this.addScrollAnimation();
+            if(Sizes.width > 800){
+                this.addScrollAnimation();
+            }
             SmoothScroll.enableSmooth();
             // Animate text
             gsap.to(".tools", { opacity: 1, delay: 0.5, duration: 1, y: -20, ease: "power3.out" });

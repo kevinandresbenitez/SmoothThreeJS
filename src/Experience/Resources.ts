@@ -62,10 +62,6 @@ export class Resources {
         });
     }
 
-    get scene_main() {
-        return this.#modelItems['scene_main'];
-    }
-
     getModel() {
         return this.#model;
     }
